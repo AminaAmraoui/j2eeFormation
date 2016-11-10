@@ -1,0 +1,43 @@
+package beans;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class EleveDAO extends DAO<Eleve>{
+	ResultSet result=null;
+	public EleveDAO(Connection conn) {
+	    super(conn);
+	  }
+
+	  public boolean create(Eleve obj) {
+	    return false;
+	  }
+
+	  public boolean delete(Eleve obj) {
+	    return false;
+	  }
+	   
+	  public boolean update(Eleve obj) {
+	    return false;
+	  }
+	   
+	  public Eleve find(int id) {
+	    Eleve eleve = new Eleve();      
+	      
+	    try {
+	       result = this.connect.createStatement(
+	        ResultSet.TYPE_SCROLL_INSENSITIVE,
+	        ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM eleve WHERE id = " + id);
+	      if(result.first())
+	        eleve = new Eleve(
+	          id,
+	          result.getString("nom"),
+	          result.getString("prenom"
+	        ));         
+	    } catch (SQLException e) {
+	      e.printStackTrace();
+	    }
+	    return eleve;
+	  }
+}
